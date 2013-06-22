@@ -1,0 +1,11 @@
+---
+- hosts: all
+  user: vagrant
+  sudo: True
+  sudo_user: root
+
+  tasks:
+    - include: tasks/setup.yml
+
+  handlers:
+    - include: handlers/mongodb.yml

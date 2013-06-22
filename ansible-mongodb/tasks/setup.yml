@@ -1,0 +1,22 @@
+---
+- name: MongoDb | Import the 10gen public GPG key
+  action: command apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+  tags: mongodb
+
+- name: MongoDb | Create a /etc/apt/sources.list.d/10gen.list
+  action: copy src=files/etc/apt/sources.list.d/10gen.list dest=/etc/apt/sources.list.d/10gen.list
+  tags: mongodb
+
+- name: MongoDb | Install
+  action: apt pkg=mongodb-10gen state=installed update-cache=yes
+  tags: mongodb
+
+- name: MongoDb | Copy conf
+  action: copy src=files/etc/mongodb.conf dest=/etc/mongodb.conf
+  notify: restart mongodb
+  tags: mongodb
+
+- name: MongoDb | Copy init
+  action: copy src=files/etc/init/mongodb.conf dest=/etc/init/mongodb.conf
+  notify: restart mongodb
+  tags: mongodb
